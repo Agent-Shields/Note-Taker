@@ -30,7 +30,7 @@ THEN I am presented with empty fields to enter a new note title and the note's t
 https://github.com/Agent-Shields/Note-Taker
 
 ## Deployed application
-// link to heroku here
+https://note-taker-agent-shields.herokuapp.com/ 
 
 
 
