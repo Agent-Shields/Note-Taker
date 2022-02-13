@@ -29,6 +29,19 @@ app.get('*', (req,res) => {
 app.post('/api/notes', (req,res) => {
   console.log(req.body);
   res.json(req.body);
+  return new Promise((resolve, reject) => {
+    fs.writeFile('./db/db.json', JSON.stringify(req.body), err => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve({
+        ok: true,
+        message: 'Note added!'
+      })
+    })
+  })
 })
 
 
