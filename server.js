@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { notes }  = require('./db/db.json');
+console.log({ notes })
 const PORT = process.env.PORT || 3001;
 const app = express();
 
@@ -9,6 +10,10 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
+
+// notes array 
+const notesArr = { notes };
+console.log(notesArr);
 
 // get request to db.json
 app.get('/api/notes', (req,res) => {
@@ -29,19 +34,21 @@ app.get('*', (req,res) => {
 app.post('/api/notes', (req,res) => {
   console.log(req.body);
   res.json(req.body);
-  return new Promise((resolve, reject) => {
-    fs.writeFile('./db/db.json', JSON.stringify(req.body), err => {
-      if (err) {
-        reject(err);
-        return;
-      }
+  notesArr.push(req.body);
+  console.log(notesArr)
+  // return new Promise((resolve, reject) => {
+  //   fs.appendFile('./db/db.json', `, \n${JSON.stringify(req.body)}`, err => {
+  //     if (err) {
+  //       reject(err);
+  //       return;
+  //     }
 
-      resolve({
-        ok: true,
-        message: 'Note added!'
-      })
-    })
-  })
+  //     resolve({
+  //       ok: true,
+  //       message: 'Note added!'
+  //     })
+  //   })
+  // })
 })
 
 
