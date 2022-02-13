@@ -20,6 +20,11 @@ app.get('/notes', (req, res) => {
   res.sendFile(path.join(__dirname, './public/notes.html'));
 });
 
+// get else requests send index.html
+app.get('*', (req,res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'))
+})
+
 // post request send notes
 app.post('/api/notes', (req,res) => {
   console.log(req.body);
