@@ -12,8 +12,12 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // notes array 
-const notesArr = { notes };
+const notesArr = [];
 console.log(notesArr);
+
+// current notes
+const curNotes = { notes }
+console.log(curNotes)
 
 // get request to db.json
 app.get('/api/notes', (req,res) => {
@@ -32,9 +36,9 @@ app.get('*', (req,res) => {
 
 // post request send notes
 app.post('/api/notes', (req,res) => {
-  console.log(req.body);
-  res.json(req.body);
-  notesArr.push(req.body);
+  // console.log(req.body);
+  // res.json(req.body);
+  notesArr.push(JSON.stringify(req.body));
   console.log(notesArr)
   // return new Promise((resolve, reject) => {
   //   fs.appendFile('./db/db.json', `, \n${JSON.stringify(req.body)}`, err => {
