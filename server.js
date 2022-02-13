@@ -11,16 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 
-// notes array 
-const notesArr = [];
-console.log(notesArr);
-
-// current notes
-const curNotes = { notes }
-console.log(curNotes)
-
 // get request to db.json
 app.get('/api/notes', (req,res) => {
+  var notes = JSON.parse(fs.readFileSync('./db/db.json'));
   res.json(notes);
 })
 
@@ -36,23 +29,11 @@ app.get('*', (req,res) => {
 
 // post request send notes
 app.post('/api/notes', (req,res) => {
-  // console.log(req.body);
-  // res.json(req.body);
-  notesArr.push(JSON.stringify(req.body));
-  console.log(notesArr)
-  // return new Promise((resolve, reject) => {
-  //   fs.appendFile('./db/db.json', `, \n${JSON.stringify(req.body)}`, err => {
-  //     if (err) {
-  //       reject(err);
-  //       return;
-  //     }
-
-  //     resolve({
-  //       ok: true,
-  //       message: 'Note added!'
-  //     })
-  //   })
-  // })
+  var newNote = req.body;
+  var notes = JSON.parse(fs.readFileSync('./db/db.json'));
+  notes.push(newNote);
+  fs.writeFileSync('./db/db.json', JSON.stringify(notes));
+  res.json(notes);
 })
 
 
